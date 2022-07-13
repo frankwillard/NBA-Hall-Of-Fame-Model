@@ -1,3 +1,3 @@
 # NBA-Hall-Of-Fame-Model
 
-Still in the works
+Project in beginning stages
