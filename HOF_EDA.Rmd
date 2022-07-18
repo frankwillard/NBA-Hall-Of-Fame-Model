@@ -1,0 +1,68 @@
+---
+title: "NBA HOF Exploratory Data Analysis"
+author: "Frankie Willard"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r load-package, warning = FALSE, echo = FALSE, message = FALSE}
+
+library(tidyverse)
+library(knitr)
+library(gridExtra)
+library(broom)
+library(ggplotify)
+
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE)
+knitr::opts_chunk$set(fig.width=6, fig.height=4)
+
+```
+
+```{r load-data}
+
+hof_data <- read_csv("/Users/frankiewillard/Downloads/Scraped Player Data.csv")
+
+train_data <- hof_data %>% 
+  filter(Eligible == 1)
+
+```
+
+
+## Visualizing the Distribution of the Response Variable
+
+```{r initial-bar}
+
+ggplot(data = train_data, aes(x = Hall_of_Fame)) + 
+  geom_bar() + 
+  labs(x = "Hall of Fame Status", title = "Distribution of Hall of Famers")
+
+```
+
+## Visualizing the Relationship Between Discrete Variables and the Response Variable
+
+```{r visualize-discreete}
+
+champ_data <- train_data %>% 
+  filter(NBA_Champ == 1)
+
+all_nba_data <- train_data %>% 
+  filter(All_NBA > 0)
+
+bar1 <- ggplot(data = champ_data, aes(x = Hall_of_Fame)) + 
+  geom_bar() +
+  labs(
+    title = "Hall of Fame Status of NBA Champions", 
+    x = "Hall of Fame Status",
+    y = "Count")
+
+bar2 <- ggplot(data = all_nba_data, aes(x = Hall_of_Fame)) + 
+  geom_bar() +
+  labs(
+    title = "Hall of Fame Status of All NBA Players (1+)", 
+    x = "Hall of Fame Status",
+    y = "Count")
+
+bar2
+
+```
